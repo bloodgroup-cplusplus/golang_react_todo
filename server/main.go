@@ -5,7 +5,7 @@ import (
 	"log"
 	"net/http"
 
-	"github.com/bloodgroupcplusplus/golang_react_todo/server/router"
+	"github.com/bloodgroup-cplusplus/golang_react_todo/server/router"
 )
 
 func main() {
