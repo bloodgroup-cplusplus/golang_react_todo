@@ -2,6 +2,8 @@ package middleware
 
 import (
 	"context"
+	"encoding/json"
+	"fmt"
 	"log"
 	"net/http"
 	"os"
@@ -9,8 +11,6 @@ import (
 	"github.com/joho/godotenv"
 	"go.mongodb.org/mongo-driver/mongo"
 	"go.mongodb.org/mongo-driver/mongo/options"
-	//"go.mongodb.org/mongo-driver/bson"
-	// "go.mongodb.org/mongo-driver/bson/primitive"
 )
 
 var collection *mongo.Collection
@@ -27,6 +27,25 @@ func createDBInstance() {
 	clientOptions := options.Client().ApplyURL(connectionString)
 	client, err := mongo.Connect(context.TODO(), clientOptions)
 
+	if err != nil {
+		log.Fatal(err)
+	}
+
+	err = client.Ping(context.TODO(), nil)
+	if err != nil {
+		log.Fatal(err)
+	}
+	fmt.Println("Connected to mongodb!")
+
+	collection = client.Database(dbName).Collection(collName)
+	fmt.Println("collection instance created")
+
+}
+func GetAllTasks(w http.ResponseWriter, r *http.Request) {
+	w.Header().Set("Context-Type", "application/x-www-formurlencoded")
+	w.Header().Set("Access-Control-Allow-Origin", "*")
+	payload := getAllTasks()
+	json.NewEncoder(w).encode(payload)
 }
 
 func loadTheEnv() {
