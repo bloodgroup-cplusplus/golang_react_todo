@@ -45,7 +45,7 @@ func GetAllTasks(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Context-Type", "application/x-www-formurlencoded")
 	w.Header().Set("Access-Control-Allow-Origin", "*")
 	payload := getAllTasks()
-	json.NewEncoder(w).encode(payload)
+	json.NewEncoder(w).Encode(payload)
 }
 
 func loadTheEnv() {
@@ -55,11 +55,7 @@ func loadTheEnv() {
 	}
 }
 
-func GetAllTasks(w http.ResponseWriter, r *http.Request) {
-
-}
-
-func CreateTask() {
+func CreateTask(w http.ResponseWriter, r *http.Request) {
 
 }
 
